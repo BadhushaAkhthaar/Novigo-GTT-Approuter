@@ -1,15 +1,12 @@
 {
-  "welcomeFile": "uimodule/index.html",
-  "authenticationMethod": "none",
-  "logout": {
-    "logoutEndpoint": "/do/logout"
-  },
+  "welcomeFile": "/cp.portal",
+  "authenticationMethod": "route",
   "routes": [
     {
-      "source": "^/uimodule/(.*)$",
+      "source": "^/shipment_backend(.*)$",
+      "destination": "shipment_backend",
       "target": "$1",
-      "authenticationType": "none",
-      "localDir": "uimodule/webapp"
+      "authenticationType":"xsuaa"
     }
   ]
 }

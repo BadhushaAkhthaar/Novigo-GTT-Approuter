@@ -12,14 +12,55 @@ modules:
       memory: 512M
     requires:
       - name: approuter_destination
+      - name: approuter_connectivity
+      - name: portal-runtime
+      - name: portal_resources
+      - name: gtt-uaa
+        group: destinations
+        properties:
+          name: shipment_backend
+          url: "https://gtt-shipment-xl-service.cfapps.us10.hana.ondemand.com/home"
+          forwardAuthToken: true
     build-parameters:
       builder: custom
       commands:
         - npm install
         - npm run build:ui --prefix ..
+  - name: launchpad
+    type: com.sap.portal.content
+    path: launchpad
+    parameters:
+      stack: cflinuxfs3
+      memory: 128M
+      buildpack: 'https://github.com/cloudfoundry/nodejs-buildpack/releases/download/v1.6.39/nodejs-buildpack-cflinuxfs3-v1.6.39.zip'
+    requires:
+      - name: portal_resources
+      - name: gtt-uaa
+      - name: gttui_html5_repo_host       
 resources:
   - name: approuter_destination
     type: org.cloudfoundry.managed-service
     parameters:
       service-plan: lite
       service: destination
+  - name: approuter_connectivity
+    type: org.cloudfoundry.managed-service
+    parameters:
+      service-plan: lite
+      service: connectivity      
+  - name: gtt-uaa
+    type: org.cloudfoundry.existing-service
+  - name: portal-runtime
+    parameters:
+      service-plan: app-runtime
+      service: html5-apps-repo
+    type: org.cloudfoundry.managed-service    
+  - name: portal_resources
+    parameters:
+      service-plan: standard
+      service: portal
+    type: org.cloudfoundry.managed-service    
+  - name: gttui_html5_repo_host
+    type: org.cloudfoundry.existing-service
+    parameters:
+      service-name: gttui_html5_repo_host
