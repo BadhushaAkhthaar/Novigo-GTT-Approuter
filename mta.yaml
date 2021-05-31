@@ -10,17 +10,17 @@ modules:
     parameters:
       disk-quota: 512M
       memory: 512M
+    properties:
+      destinations:
+        - name: shipment_backend
+          url: "https://gtt-shipment-xl-service.cfapps.us10.hana.ondemand.com/upload"
+          forwardAuthToken: true
     requires:
       - name: approuter_destination
       - name: approuter_connectivity
       - name: portal-runtime
       - name: portal_resources
-      - name: gtt-uaa
-        group: destinations
-        properties:
-          name: shipment_backend
-          url: "https://gtt-shipment-xl-service.cfapps.us10.hana.ondemand.com/home"
-          forwardAuthToken: true
+      - name: gtt-uaa 
     build-parameters:
       builder: custom
       commands:

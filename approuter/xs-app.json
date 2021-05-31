@@ -1,12 +1,13 @@
 {
-  "welcomeFile": "/cp.portal",
+  "welcomeFile": "/cp.portal ",
   "authenticationMethod": "route",
   "routes": [
     {
       "source": "^/shipment_backend(.*)$",
       "destination": "shipment_backend",
       "target": "$1",
-      "authenticationType":"xsuaa"
+      "authenticationType":"xsuaa",
+      "csrfProtection": false
     }
   ]
 }
